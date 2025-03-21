@@ -1,0 +1,236 @@
+{% extends 'exercises/base.html' %}
+{% load static %}
+
+{% block title %}Rewards - FitSync{% endblock %}
+
+{% block extra_css %}
+<style>
+    .rewards-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    
+    .user-stats {
+        background: #f5f5f5;
+        padding: 2rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .stat-item {
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .stat-item h3 {
+        margin: 0;
+        color: #666;
+    }
+    
+    .stat-item p {
+        margin: 0.5rem 0 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #007bff;
+    }
+    
+    .rewards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+    
+    .reward-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        position: relative;
+        transition: transform 0.2s;
+    }
+    
+    .reward-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .reward-card h3 {
+        margin: 0 0 0.5rem 0;
+    }
+    
+    .reward-card p {
+        margin: 0 0 1rem 0;
+        color: #666;
+    }
+    
+    .reward-card .points {
+        font-weight: 500;
+        color: #007bff;
+        margin-bottom: 1rem;
+    }
+    
+    .redeem-btn {
+        width: 100%;
+        padding: 0.5rem;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s;
+    }
+    
+    .redeem-btn:hover {
+        background: #218838;
+    }
+    
+    .redeem-btn:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+    }
+    
+    .redeemed-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: #28a745;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+    }
+    
+    .user-rewards {
+        margin-top: 3rem;
+    }
+    
+    .user-rewards h2 {
+        margin-bottom: 1rem;
+    }
+    
+    .user-rewards-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="rewards-container">
+    <div class="user-stats">
+        <h2>Your Progress</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>Current Level</h3>
+                <p>{{ user.level }}</p>
+            </div>
+            <div class="stat-item">
+                <h3>Total EXP</h3>
+                <p>{{ user.exp }}</p>
+            </div>
+            <div class="stat-item">
+                <h3>Reward Points</h3>
+                <p>{{ user.reward_points }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Available Rewards</h2>
+    <div class="rewards-grid">
+        {% for reward in rewards %}
+        <div class="reward-card">
+            <h3>{{ reward.name }}</h3>
+            <p>{{ reward.description }}</p>
+            <p class="points">{{ reward.points_cost }} Points</p>
+            {% if reward.id in user_rewards %}
+            <span class="redeemed-badge">Redeemed</span>
+            {% else %}
+            <button class="redeem-btn" onclick="redeemReward({{ reward.id }})"
+                    {% if user.reward_points < reward.points_cost %}disabled{% endif %}>
+                Redeem Reward
+            </button>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p>No rewards available at the moment.</p>
+        {% endfor %}
+    </div>
+    
+    {% if user_rewards %}
+    <div class="user-rewards">
+        <h2>Your Redeemed Rewards</h2>
+        <div class="user-rewards-list">
+            {% for reward in user_rewards %}
+            <div class="reward-card">
+                <h3>{{ reward.name }}</h3>
+                <p>{{ reward.description }}</p>
+                <p class="points">Redeemed on {{ reward.redeemed_at|date:"F j, Y" }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    async function redeemReward(rewardId) {
+        if (!confirm('Are you sure you want to redeem this reward?')) return;
+        
+        const formData = new FormData();
+        formData.append('reward_id', rewardId);
+        
+        try {
+            const response = await fetch('{% url "redeem_reward" %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Reload page to show updated rewards
+                window.location.reload();
+            } else {
+                alert('Error redeeming reward: ' + data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error redeeming reward. Please try again.');
+        }
+    }
+    
+    // Get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock %} 

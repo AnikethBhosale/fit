@@ -1,0 +1,236 @@
+{% extends 'exercises/base.html' %}
+{% load static %}
+
+{% block title %}Exercises - FitSync{% endblock %}
+
+{% block extra_css %}
+<style>
+    .exercises-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    
+    .exercises-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    
+    .exercises-title {
+        margin: 0;
+        color: #007bff;
+    }
+    
+    .user-stats {
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .stat-badge {
+        background: #f5f5f5;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+    
+    .exercises-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+    
+    .exercise-card {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .exercise-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .exercise-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    
+    .exercise-content {
+        padding: 1.5rem;
+    }
+    
+    .exercise-name {
+        margin: 0 0 0.5rem;
+        color: #333;
+    }
+    
+    .exercise-description {
+        color: #666;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .exercise-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    
+    .difficulty-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .difficulty-beginner {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+    
+    .difficulty-intermediate {
+        background: #fff3e0;
+        color: #f57c00;
+    }
+    
+    .difficulty-advanced {
+        background: #fbe9e7;
+        color: #d84315;
+    }
+    
+    .exp-badge {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .start-btn {
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-align: center;
+        text-decoration: none;
+    }
+    
+    .start-btn:hover {
+        background: #218838;
+    }
+    
+    .start-btn:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+    }
+    
+    .filters {
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        background: white;
+        color: #666;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .filter-btn:hover {
+        background: #f8f9fa;
+    }
+    
+    .filter-btn.active {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="exercises-container">
+    <div class="exercises-header">
+        <h1 class="exercises-title">Available Exercises</h1>
+        <div class="user-stats">
+            <span class="stat-badge">Level {{ user.level }}</span>
+            <span class="stat-badge">{{ user.total_exp }} EXP</span>
+        </div>
+    </div>
+    
+    <div class="filters">
+        <button class="filter-btn active" data-difficulty="all">All</button>
+        <button class="filter-btn" data-difficulty="beginner">Beginner</button>
+        <button class="filter-btn" data-difficulty="intermediate">Intermediate</button>
+        <button class="filter-btn" data-difficulty="advanced">Advanced</button>
+    </div>
+    
+    <div class="exercises-grid">
+        {% for exercise in exercises %}
+        <div class="exercise-card" data-difficulty="{{ exercise.difficulty }}">
+            <img src="{{ exercise.image_url }}" alt="{{ exercise.name }}" class="exercise-image">
+            <div class="exercise-content">
+                <h2 class="exercise-name">{{ exercise.name }}</h2>
+                <p class="exercise-description">{{ exercise.description }}</p>
+                <div class="exercise-meta">
+                    <span class="difficulty-badge difficulty-{{ exercise.difficulty }}">
+                        {{ exercise.difficulty|title }}
+                    </span>
+                    <span class="exp-badge">5 EXP/rep</span>
+                </div>
+                <a href="{% url 'exercise_detail' exercise.id %}" class="start-btn">
+                    Start Exercise
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No exercises available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Filter exercises by difficulty
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const exerciseCards = document.querySelectorAll('.exercise-card');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const difficulty = btn.dataset.difficulty;
+            
+            // Filter cards
+            exerciseCards.forEach(card => {
+                if (difficulty === 'all' || card.dataset.difficulty === difficulty) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %} 

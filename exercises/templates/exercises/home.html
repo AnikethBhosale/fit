@@ -1,0 +1,335 @@
+{% extends 'exercises/base.html' %}
+{% load static %}
+
+{% block title %}Welcome to FitSync{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #007bff 0%, #00bcd4 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-bottom: 4rem;
+    }
+    
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+    
+    .cta-btn {
+        padding: 0.75rem 2rem;
+        border-radius: 30px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: transform 0.3s;
+    }
+    
+    .cta-btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .cta-btn-primary {
+        background: white;
+        color: #007bff;
+    }
+    
+    .cta-btn-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+    
+    .features-section {
+        padding: 4rem 0;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .section-title h2 {
+        color: #333;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .section-title p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+        font-size: 2.5rem;
+        color: #007bff;
+        margin-bottom: 1rem;
+    }
+    
+    .feature-title {
+        font-size: 1.25rem;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+    
+    .feature-description {
+        color: #666;
+        line-height: 1.6;
+    }
+    
+    .stats-section {
+        background: #f8f9fa;
+        padding: 4rem 0;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    .stat-card {
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #007bff;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .testimonials-section {
+        padding: 4rem 0;
+    }
+    
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    .testimonial-card {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .testimonial-text {
+        color: #666;
+        font-style: italic;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+    
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .author-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #007bff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+    }
+    
+    .author-info h4 {
+        margin: 0;
+        color: #333;
+    }
+    
+    .author-info p {
+        margin: 0;
+        color: #666;
+        font-size: 0.875rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Transform Your Fitness Journey</h1>
+        <p class="hero-subtitle">
+            Track your exercises, earn rewards, and compete with others in our gamified fitness platform.
+        </p>
+        <div class="cta-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'exercise_list' %}" class="cta-btn cta-btn-primary">Start Exercising</a>
+                <a href="{% url 'leaderboard' %}" class="cta-btn cta-btn-secondary">View Leaderboard</a>
+            {% else %}
+                <a href="{% url 'signup' %}" class="cta-btn cta-btn-primary">Get Started</a>
+                <a href="{% url 'login' %}" class="cta-btn cta-btn-secondary">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="section-title">
+        <h2>Why Choose FitSync?</h2>
+        <p>Experience fitness in a whole new way with our innovative features</p>
+    </div>
+    
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="bi bi-camera-video"></i>
+            </div>
+            <h3 class="feature-title">Real-time Tracking</h3>
+            <p class="feature-description">
+                Use your webcam to track exercises in real-time with our advanced pose detection technology.
+            </p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="bi bi-trophy"></i>
+            </div>
+            <h3 class="feature-title">Gamified Experience</h3>
+            <p class="feature-description">
+                Earn experience points, level up, and compete with others on the global leaderboard.
+            </p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="bi bi-gift"></i>
+            </div>
+            <h3 class="feature-title">Rewards System</h3>
+            <p class="feature-description">
+                Redeem your hard-earned points for exclusive rewards and achievements.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_users }}</div>
+            <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ total_exercises }}</div>
+            <div class="stat-label">Exercises</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ total_rewards }}</div>
+            <div class="stat-label">Rewards</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ total_exp_earned }}</div>
+            <div class="stat-label">Total EXP Earned</div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials-section">
+    <div class="section-title">
+        <h2>What Our Users Say</h2>
+        <p>Join thousands of satisfied users who have transformed their fitness journey</p>
+    </div>
+    
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <p class="testimonial-text">
+                "FitSync has made working out fun and engaging. The real-time tracking and rewards system keep me motivated!"
+            </p>
+            <div class="testimonial-author">
+                <div class="author-avatar">JD</div>
+                <div class="author-info">
+                    <h4>John Doe</h4>
+                    <p>Level 25 • 5,000 EXP</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="testimonial-card">
+            <p class="testimonial-text">
+                "The pose detection technology is amazing! It helps me maintain proper form during exercises."
+            </p>
+            <div class="testimonial-author">
+                <div class="author-avatar">AS</div>
+                <div class="author-info">
+                    <h4>Alice Smith</h4>
+                    <p>Level 18 • 3,500 EXP</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="testimonial-card">
+            <p class="testimonial-text">
+                "I love competing with friends on the leaderboard. It adds an extra layer of motivation to my workouts."
+            </p>
+            <div class="testimonial-author">
+                <div class="author-avatar">MJ</div>
+                <div class="author-info">
+                    <h4>Mike Johnson</h4>
+                    <p>Level 32 • 7,500 EXP</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Posture Perfect - Analysis & Improvement</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo"><img src="https://img.icons8.com/ios-filled/50/000000/gym.png" alt="FitSync Logo" class="logo-img">FitSync</div>
+    <div class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="#">Posture Analysis</a>
+      <a href="#">Leaderboard</a>
+      <a href="#">Rewards</a>
+      <a href="#">Exercises</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="user-profile">
+      <button class="login-btn">Login</button>
+      <div class="profile-dropdown">
+        <button class="profile-btn">👤</button>
+        <div class="dropdown-content">
+          <a href="#">Levels</a>
+          <a href="#">Achievements</a>
+          <a href="#">Rewards</a>
+          <a href="#">Points</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+        <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+      <div id="loginForm" class="tab-content">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button class="submit-btn">Login</button>
+      </div>
+      <div id="signupForm" class="tab-content" style="display:none;">
+        <input type="text" placeholder="Full Name">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <input type="password" placeholder="Confirm Password">
+        <button class="submit-btn">Sign Up</button>
+      </div>
+    </div>
+  </div>
+
+      <div class="hero-content">
+        <h1>Turn Your Workout into a Challenge!</h1>
+        <p>Improve your posture, climb the leaderboard, and unlock rewards—all while making fitness fun!</p>
+        <div class="button-group">
+          <button class="learn-more-btn">Learn More</button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1616803689943-5601631c7fec?w=400&auto=format" alt="Perfect Posture" class="hero-img">
+      </div>
+    </section>
+
+    <!-- Why Posture Matters Section -->
+    <section class="posture-matters">
+      <h2>Why Posture Matters</h2>
+      <p class="section-subtitle">Poor posture can lead to back pain, decreased energy, and long-term health problems. Our tracking tools help you stay consistent.</p>
+      
+      <div class="benefits-container">
+        <div class="benefit-card">
+          <div class="benefit-icon">🛡️</div>
+          <h3>Prevent Pain & Injury</h3>
+          <p>Good posture reduces strain on your muscles and ligaments, preventing chronic pain and injury.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">⚡</div>
+          <h3>Boost Energy & Focus</h3>
+          <p>Proper posture improves breathing and circulation, leading to better energy levels and concentration.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">😊</div>
+          <h3>Build Confidence</h3>
+          <p>Standing and sitting tall enhances your appearance and boosts your self-image and confidence.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise Section -->
+    <section id="exercises" class="exercises-section">
+      <h2>Exercises</h2>
+      <p class="exercises-subtitle">Try these exercises to improve your posture and relieve tension.</p>
+      <div class="exercise-slider">
+        <button class="slider-btn prev">&#10094;</button>
+        <div class="exercise-cards">
+          <div class="exercise-card">
+            <div class="exercise-level">Beginner</div>
+            <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&auto=format" alt="Arm Raise" class="exercise-image">
+            <h3>Arm Raise</h3>
+            <p>Simple arm raises to improve shoulder mobility and posture.</p>
+            <button class="start-exercise-btn">Start Exercise</button>
+          </div>
+          <div class="exercise-card">
+            <div class="exercise-level">Beginner</div>
+            <img src="https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?w=500&auto=format" alt="Squat" class="exercise-image">
+            <h3>Squat</h3>
+            <p>Basic squats for lower body strength and stability.</p>
+            <button class="start-exercise-btn">Start Exercise</button>
+          </div>
+          <div class="exercise-card">
+            <div class="exercise-level">Intermediate</div>
+            <img src="https://images.unsplash.com/photo-1566241477600-ac026ad43874?w=500&auto=format" alt="Plank" class="exercise-image">
+            <h3>Plank</h3>
+            <p>Core strengthening exercise for better posture.</p>
+            <button class="start-exercise-btn">Start Exercise</button>
+          </div>
+          <div class="exercise-card">
+            <div class="exercise-level">Intermediate</div>
+            <img src="https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=500&auto=format" alt="Jumping Jack" class="exercise-image">
+            <h3>Jumping Jack</h3>
+            <p>Full-body cardio exercise for improved coordination.</p>
+            <button class="start-exercise-btn">Start Exercise</button>
+          </div>
+          <div class="exercise-card">
+            <div class="exercise-level">Advanced</div>
+            <img src="https://images.unsplash.com/photo-1598971639058-999901614abc?w=500&auto=format" alt="Push-up" class="exercise-image">
+            <h3>Push-up</h3>
+            <p>Classic exercise for upper body strength and stability.</p>
+            <button class="start-exercise-btn">Start Exercise</button>
+          </div>
+        </div>
+        <button class="slider-btn next">&#10095;</button>
+        <div class="slider-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section id="leaderboard" class="leaderboard-section">
+      <h2>Leaderboard</h2>
+      <p class="leaderboard-subtitle">See how your posture ranks against others and stay motivated!</p>
+      
+      <div class="leaderboard-container">
+        <div class="leaderboard-table">
+          <h3>Top Posture Masters</h3>
+          <div class="leaderboard-table-content">
+            <div class="leaderboard-row header">
+              <span>Rank</span>
+              <span>Name</span>
+              <span>Score</span>
+              <span>Streak</span>
+            </div>
+            <div class="leaderboard-row">
+              <span class="rank">1</span>
+              <span class="name"><span class="initial">S</span>Sarah J. 🏆</span>
+              <span>98</span>
+              <span>14 days</span>
+            </div>
+            <div class="leaderboard-row">
+              <span class="rank">2</span>
+              <span class="name"><span class="initial">M</span>Michael T.</span>
+              <span>95</span>
+              <span>10 days</span>
+            </div>
+            <div class="leaderboard-row">
+              <span class="rank">3</span>
+              <span class="name"><span class="initial">J</span>Jessica K.</span>
+              <span>93</span>
+              <span>7 days</span>
+            </div>
+            <div class="leaderboard-row">
+              <span class="rank">4</span>
+              <span class="name"><span class="initial">A</span>Alex W.</span>
+              <span>91</span>
+              <span>5 days</span>
+            </div>
+            <div class="leaderboard-row">
+              <span class="rank">5</span>
+              <span class="name"><span class="initial">R</span>Ryan L.</span>
+              <span>89</span>
+              <span>4 days</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-panel">
+          <h3>Your Progress</h3>
+          <div class="progress-circle-container">
+            <div class="progress-circle" data-progress="92">
+              <span class="progress-text">92%</span>
+            </div>
+          </div>
+          <div class="weekly-streak">
+            <h4>Weekly Streak</h4>
+            <div class="streak-days">
+              <span class="day active">M</span>
+              <span class="day active">T</span>
+              <span class="day active">W</span>
+              <span class="day active">T</span>
+              <span class="day active">F</span>
+              <span class="day">S</span>
+              <span class="day">S</span>
+            </div>
+            <p>5 days</p>
+          </div>
+          <div class="rank-info">
+            <h4>Your Rank</h4>
+            <div class="rank-progress">
+              <div class="rank-bar" style="width: 75%"></div>
+            </div>
+            <p>6th of 42</p>
+          </div>
+          <button class="view-stats-btn">View Full Stats</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rewards Section -->
+    <section id="rewards" class="rewards-section">
+      <h2>Earn Rewards</h2>
+      <p class="rewards-subtitle">Maintain good posture and unlock exclusive rewards from our partners.</p>
+      <div class="rewards-container">
+        <div class="reward-card gold">
+          <div class="level-tag">Gold Level</div>
+          <h3>50% Off Gym Membership</h3>
+          <p>Maintain excellent posture for 14 consecutive days to unlock this reward.</p>
+          <div class="reward-progress">
+            <div class="progress-text">Progress</div>
+            <div class="progress-bar">
+              <div class="progress-dot" style="left: 64%"></div>
+              <span>9/14</span>
+            </div>
+            <button class="reward-button locked">Locked</button>
+          </div>
+        </div>
+        <div class="reward-card silver">
+          <div class="level-tag">Silver Level</div>
+          <h3>20% Off Ergonomic Chairs</h3>
+          <p>Achieve an average posture score of 85+ for 7 days to unlock this reward.</p>
+          <div class="reward-progress">
+            <div class="progress-text">Progress</div>
+            <div class="progress-bar">
+              <div class="progress-dot" style="left: 100%"></div>
+              <span>7/7</span>
+            </div>
+            <button class="reward-button">Claim</button>
+          </div>
+        </div>
+        <div class="reward-card bronze">
+          <div class="level-tag">Bronze Level</div>
+          <h3>Free Wellness App Subscription</h3>
+          <p>Complete 5 posture analysis sessions to unlock this reward.</p>
+          <div class="reward-progress">
+            <div class="progress-text">Progress</div>
+            <div class="progress-bar">
+              <div class="progress-dot" style="left: 100%"></div>
+              <span>5/5</span>
+            </div>
+            <button class="reward-button">Claim</button>
+          </div>
+        </div>
+      </div>
+      <button class="view-all-rewards">View All Rewards</button>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+      <h2>Contact Us</h2>
+      <p class="contact-subtitle">Have questions about our services? We're here to help!</p>
+      
+      <div class="contact-container">
+        <div class="contact-info">
+          <h3>Get in Touch</h3>
+          <p>Fill out the form and our team will get back to you within 24 hours.</p>
+          
+          <div class="info-item">
+            <span class="info-icon">✉️</span>
+            <div class="info-content">
+              <h4>Email</h4>
+              <p>support@posturecheck.com</p>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-icon">🕒</span>
+            <div class="info-content">
+              <h4>Support Hours</h4>
+              <p>Monday - Friday: 9AM to 5PM EST</p>
+            </div>
+          </div>
+        </div>
+        
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="How can we help you?" required></textarea>
+          </div>
+          
+          <button type="submit" class="send-message-btn">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>FitSync</h3>
+          <p>Transform your fitness journey with guided workouts and personalized tracking.</p>
+          <div class="social-links">
+            <a href="#"><i>📘</i></a>
+            <a href="#"><i>🐦</i></a>
+            <a href="#"><i>📸</i></a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Posture Analysis</a></li>
+              <li><a href="#">Leaderboard</a></li>
+              <li><a href="#">Rewards</a></li>
+              <li><a href="#">Exercises</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Research</a></li>
+              <li><a href="#">Posture Tips</a></li>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Subscribe</h4>
+            <p>Join our newsletter for posture tips and updates.</p>
+            <div class="subscribe-form">
+              <input type="email" placeholder="Your email">
+              <button>→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 FitSync. All rights reserved.</p>
+      </div>
+    </footer>
+  </main>

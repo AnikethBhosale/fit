@@ -1,0 +1,106 @@
+
+html {
+  scroll-padding-top: 5rem;
+  scroll-behavior: smooth;
+}
+
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  :root {
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    --hover-gradient: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  }
+  
+  body {
+    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white;
+  }
+}
+
+@layer components {
+  .hero-section {
+    @apply relative overflow-hidden;
+    background: var(--primary-gradient);
+  }
+
+  .hero-section::before {
+    content: '';
+    @apply absolute inset-0 bg-black/10;
+  }
+
+  .gradient-btn {
+    @apply px-6 py-3 rounded-lg font-semibold text-white transition-all duration-300 transform hover:scale-105;
+    background: var(--primary-gradient);
+  }
+  
+  .gradient-btn:hover {
+    background: var(--hover-gradient);
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-transform duration-300 hover:transform hover:scale-[1.02];
+  }
+
+  .section-title {
+    @apply text-3xl font-bold mb-4 bg-clip-text text-transparent;
+    background: var(--primary-gradient);
+  }
+
+  .nav-link {
+    @apply text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200;
+  }
+
+  .footer {
+    @apply bg-gray-900 text-white;
+    background: linear-gradient(to right, #1f2937, #111827);
+  }
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.progress-bar {
+  @apply h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden;
+}
+
+.progress-bar-fill {
+  @apply h-full rounded-full transition-all duration-500;
+  background: var(--primary-gradient);
+}
